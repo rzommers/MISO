@@ -6,13 +6,36 @@ This guide explains in a step-by-step approach the recommended way to install th
 
 A Linux OS must be used to access the provided tools. If you are already running on a Linux OS (Ubuntu, Fedora, etc.), skip this step, and continue with installing OpenMPI and System Packages. If you are running on a Windows OS, one available option to access this content is by using a Linux simulator, for example, WSL. Note that the code blocks in this guide assume that Ubuntu is being used, so certain steps may be different on other platforms.
 
-[Installation Process]
+To install WSL, enter the terminal (on Windows, you can use "windows_key + r" and type in "cmd" to the prompt to open the terminal) and enter the following line of code:
+
+```
+wsl --install
+```
+
+Accept all permissions on the popups and allow WSL to be installed. Once finished, you will be asked to enter a username and password. This will be your Linux administrator account, and the password will be needed to be used for all "sudo" commands to install required system packages.
+
+Start up a new Ubuntu (Linux) terminal by selecting the dropdown arrow and choosing "Ubuntu". The default directory is "/home/[username]". From this point, use the command:
+
+```
+mkdir motor
+```
+
+to create a folder for all downloads. Below is a list of basic Linux commands to navigate between folders:
+
+```
+explorer.exe .   # open file explorer
+ls               # display folders and files within current directory
+cd [folder]      # enter a folder within the current directory
+cd ..            # exit current directory to its container folder
+cd               # navigate to /home/[username]
+cd /             # navigate to /
+```
 
 ## OpenMPI and System Packages
 
 OpenMPI is a software package that is an implementation of the Message Passing Interface (MPI) standard that is required for a parallel build of MFEM. Alternatives exist, such as MPICH, but OpenMPI is the recommended MPI implementation. MPI is required for MISO.
 
-In addition to MISO, it is highly recommended to install gcc, which is a collection of compilers, and cmake, which is a build system generator. Alternatives exist for both of these installations, but this guide will use these choices.
+In addition to MISO, it is highly recommended to install gcc, which is a collection of compilers, and cmake, which is a build system generator. Alternatives exist for both of these installations, but this guide will use these choices. git and build-essential are mandatory packages, and while build-essential may be installed by default, you should confirm its presence before proceeding.
 
 To download these packages, you must be on an administrator account. Use the following lines of code in the terminal to download the packages:
 
@@ -20,10 +43,24 @@ To download these packages, you must be on an administrator account. Use the fol
 sudo apt install gcc
 sudo apt install cmake
 sudo apt install git
-sudo apt-get install openmpi-bin openmpi-doc libopenmpi-dev
+sudo apt install build-essential
+sudo apt install openmpi-bin openmpi-doc libopenmpi-dev
 ```
 
-[Add info on connecting openmpi on WSL]
+For OpenMPI (or any MPI package) to be used, it must be able to be found on the PC's path. To confirm that OpenMPI has been successfully installed and can be used, enter the terminal and use the following lines of code:
+
+```
+which mpicc
+which mpicxx
+```
+
+After each command, a directory should be listed that holds these particular executables. If these files can not be found, then they need to be added to your path. Enter the file explorer and search for "mpicc". The file, along with mpicxx and others, should be in a "bin" directory". Add this directory as a Path variable by using the following code:
+
+```
+export PATH=$PATH:[path_to_mpi_container_directory]
+```
+
+This command MUST be repeated whenever a new command prompt is opened, as an export statement is not permanent. Every export command throughout this process must be repeated when that particular installation needs to be used.
 
 ## MFEM Prerequisites
 
@@ -35,17 +72,20 @@ To download the HYPRE package, follow the below steps:
 1. Go to [HYPRE GitHub](https://github.com/hypre-space/hypre)
 2. Download version 2.28.0 (this is NOT the current version; go to the "Releases" section to see past versions)
 3. Unzip the folder and extract it to [path_to_motor_folder]/Dependencies
+      Note that the default browser download is to Windows. Drag and drop the extracted files in file explorer to copy them from Windows over to Linux
 4. Additional information can be found in the README.md and INSTALL.md files for configuration and installation
 
 Enter the terminal and navigate to the motor folder. Use the following lines of code to configure and install HYPRE.
 
 ```
-cd Dependencies/hypre/src
+cd Dependencies/hypre-2.28.0/src./
 ./configure
+    # If this comes back as an error, use the following line of code then repeat ./configure
+    chmod +x configure
 cd cmbuild
 cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DHYPRE_INSTALL_PREFIX="[path_to_motor_folder]/Installations/hypre" -DHYPRE_ENABLE_SHARED=ON
 make install
-cd ../../..
+cd ../../../..
 export PATH=$PATH:[path_to_motor_folder]/Installations/hypre
 ```
 
@@ -64,7 +104,7 @@ To download the METIS package, follow the below steps:
 Enter the terminal and navigate to the motor folder. Use the following lines of code to configure and install METIS.
 
 ```
-cd Dependencies/metis
+cd Dependencies/metis-5.1.0
 make config shared=1 cc=gcc prefix=[path_to_motor_folder]/Installations/metis
 make -j 4
 make install
@@ -133,7 +173,7 @@ cmake .. \
   -DENABLE_ZOLTAN=OFF \
   -DENABLE_EGADS=ON \
   -DPUMI_USE_EGADSLITE=OFF \
-  -DIS_TESTING=OFF \
+  -DIS_TESTING=OFF
 ```
 
 #### Terminal Code
@@ -174,7 +214,7 @@ cmake .. \
   -DMFEM_USE_PUMI=ON \
   -DPUMI_DIR="/[path_to_motor_folder]/Installations/core" \
   -DMFEM_ENABLE_EXAMPLES=OFF \
-  -DMFEM_ENABLE_MINIAPPS=OFF \
+  -DMFEM_ENABLE_MINIAPPS=OFF
 ```
 
 #### Terminal Code
@@ -238,7 +278,7 @@ cmake .. \
   -DPUMI_DIR="/[path_to_motor_folder]/Installations/core" \
   -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_TESTING=ON \
-  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
 #### Terminal Code
