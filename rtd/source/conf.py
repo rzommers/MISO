@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = 'Test-rtd'
+project = 'MISO Setup'
 copyright = 'TBA'
 author = 'TBA'
 
