@@ -4,7 +4,7 @@ This guide explains in a step-by-step approach the recommended way to install th
 
 ## Windows Subsystem for Linux (WSL)
 
-A Linux OS must be used to access the provided tools. If you are already running on a Linux OS (Ubuntu, Fedora, etc.), skip this step, and continue with installing OpenMPI and System Packages. If you are running on a Windows OS, one available option to access this content is by using a Linux simulator, for example, WSL. Note that the code blocks in this guide assume that Ubuntu is being used, so certain steps may be different on other platforms.
+A Linux OS is highly recommended for this installation. If you are already running on a Linux OS (Ubuntu, Fedora, etc.), skip this step, and continue below with installing OpenMPI and System Packages. If you are running on a Windows OS, one option is to use a Linux simulator; for example, WSL. Note that the code blocks in this guide assume that Ubuntu is being used, so certain steps may be different on other platforms.
 
 To install WSL, enter the terminal (on Windows, you can use "windows_key + r" and type in "cmd" to the prompt to open the terminal) and enter the following line of code:
 
@@ -14,13 +14,21 @@ wsl --install
 
 Accept all permissions on the popups and allow WSL to be installed. Once finished, you will be asked to enter a username and password. This will be your Linux administrator account, and the password will be needed to be used for all "sudo" commands to install required system packages.
 
-Start up a new Ubuntu (Linux) terminal by selecting the dropdown arrow and choosing "Ubuntu". The default directory is "/home/[username]". From this point, use the command:
+Start up a new Ubuntu (Linux) terminal by selecting the dropdown arrow and choosing "Ubuntu". The default directory is "/home/[username]". 
+
+## Linux Basics
+
+This section is for those that have little to no previous experience working with Linux and/or with the terminal.
+
+To begin, use the command:
 
 ```
 mkdir motor
 ```
 
-to create a folder for all downloads. Below is a list of basic Linux commands to navigate between folders:
+to create a folder for all MISO-related downloads. Throughout this guide, there will be paths that refer to this folder (for example, [path_to_motor_folder]). The default path for most prompts is /home/[username], so an example [path_to_motor_folder] would be /home/[username]/motor.
+
+Below is a list of other basic Linux commands that will assist in navigatation between directories:
 
 ```
 explorer.exe .   # open file explorer
@@ -31,11 +39,13 @@ cd               # navigate to /home/[username]
 cd /             # navigate to /
 ```
 
+The file explorer is best utilized by native Linux users, and doesn't interact as well with WSL. It is most often used to search for specific files, or quickly move or extract files/folders.
+
 ## OpenMPI and System Packages
 
-OpenMPI is a software package that is an implementation of the Message Passing Interface (MPI) standard that is required for a parallel build of MFEM. Alternatives exist, such as MPICH, but OpenMPI is the recommended MPI implementation. MPI is required for MISO.
+OpenMPI is a software package that is an implementation of the Message Passing Interface (MPI) standard that is required for a parallel build of MFEM (the main dependency of MISO). Alternatives exist, such as MPICH, but OpenMPI is the recommended MPI implementation.
 
-In addition to MISO, it is highly recommended to install gcc, which is a collection of compilers, and cmake, which is a build system generator. Alternatives exist for both of these installations, but this guide will use these choices. git and build-essential are mandatory packages, and while build-essential may be installed by default, you should confirm its presence before proceeding.
+In addition to OpenMPI, it is highly recommended to install gcc, which is a collection of compilers, and cmake, which is a build system generator. Alternatives exist for both of these installations, but this guide will use these choices. git and build-essential are mandatory packages, and while build-essential may be installed by default, its presence should be confirmed before proceeding.
 
 To download these packages, you must be on an administrator account. Use the following lines of code in the terminal to download the packages:
 
@@ -54,7 +64,7 @@ which mpicc
 which mpicxx
 ```
 
-After each command, a directory should be listed that holds these particular executables. If these files can not be found, then they need to be added to your path. Enter the file explorer and search for "mpicc". The file, along with mpicxx and others, should be in a "bin" directory". Add this directory as a Path variable by using the following code:
+After each command, a directory should be listed that holds the executable. If these files can not be found, then they need to be added to your path. Enter the file explorer and search for "mpicc". The file, along with mpicxx and others, should be in a "bin" directory. Add this directory as a Path variable by using the following code:
 
 ```
 export PATH=$PATH:[path_to_mpi_container_directory]
@@ -72,7 +82,7 @@ To download the HYPRE package, follow the below steps:
 1. Go to [HYPRE GitHub](https://github.com/hypre-space/hypre)
 2. Download version 2.28.0 (this is NOT the current version; go to the "Releases" section to see past versions)
 3. Unzip the folder and extract it to [path_to_motor_folder]/Dependencies
-      Note that the default browser download is to Windows. Drag and drop the extracted files in file explorer to copy them from Windows over to Linux
+      Note that if using WSL, the default browser download is to Windows. Drag and drop the extracted files in file explorer to copy them from Windows over to Linux
 4. Additional information can be found in the README.md and INSTALL.md files for configuration and installation
 
 Enter the terminal and navigate to the motor folder. Use the following lines of code to configure and install HYPRE.
@@ -80,7 +90,7 @@ Enter the terminal and navigate to the motor folder. Use the following lines of 
 ```
 cd Dependencies/hypre-2.28.0/src./
 ./configure
-    # If this comes back as an error, use the following line of code then repeat ./configure
+    # If an error statement stops this command, use the following line of code then repeat ./configure
     chmod +x configure
 cd cmbuild
 cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DHYPRE_INSTALL_PREFIX="[path_to_motor_folder]/Installations/hypre" -DHYPRE_ENABLE_SHARED=ON
@@ -89,7 +99,7 @@ cd ../../../..
 export PATH=$PATH:[path_to_motor_folder]/Installations/hypre
 ```
 
-Note that EVERY "export" statement must be repeated upon each PC reboot, if MISO needs to be used.
+Recall that EVERY "export" statement must be repeated upon each PC reboot, when MISO is being used.
 
 ### METIS
 
@@ -114,7 +124,7 @@ export PATH=$PATH:[path_to_motor_folder]/Installations/metis
 
 ## PUMI (additional mesh tool)
 
-PUMI is a library that is optional for standalone MFEM, but is required for certain MISO tests. This project uses the CORE package, which is a modification of PUMI and serves the same purpose. EngineeringSketchPad (ESP) is a dependency for CORE, and OpenCASCADE is in turn a requirement for ESP.
+PUMI is a library that is optional for standalone MFEM, but is required for certain aspects of MISO. This project uses the CORE package, which is a modification of PUMI and serves the same purpose. EngineeringSketchPad (ESP) is a dependency of CORE, and OpenCASCADE is in turn a dependency of ESP.
 
 ### OpenCASCADE
 
@@ -140,7 +150,7 @@ make
 cd ../../..
 ```
 
-In addition to every "export" statement, the following command must be repeated upon each PC reboot, if MISO needs to be used:
+In addition to every "export" statement, the following command must be repeated upon each PC reboot, when MISO is being used:
 
 ```
 source [path_to_motor_folder]/Dependencies/EngSketchPad/ESPenv.sh
@@ -178,6 +188,8 @@ cmake .. \
 
 #### Terminal Code
 
+Enter the terminal and navigate to the motor folder. Use the following lines of code to download, configure, and install CORE.
+
 ```
 cd Dependencies
 git clone https://github.com/tuckerbabcock/core.git
@@ -195,7 +207,7 @@ export PATH=$PATH:/[path_to_motor_folder]/Installations/core
 
 ## Building MFEM
 
-Once HYPRE, METIS, and CORE have been successfully installed, MFEM can now be built. For more information on the package, see the [MFEM Website](https://mfem.org/building/). You can also go to their [GitHub](https://github.com/mfem/mfem) and inspect the README.md and INSTALL.md files.
+Once HYPRE, METIS, and CORE have been successfully installed, MFEM can now be built. For more information on the package, see the [MFEM Website](https://mfem.org/building/). You can also go to their [GitHub](https://github.com/mfem/mfem) and look through the README.md and INSTALL.md files.
 
 A configuration file is highly recommended to be used with cmake to more specifically configure the build of MFEM.
 
@@ -218,6 +230,8 @@ cmake .. \
 ```
 
 #### Terminal Code
+
+Enter the terminal and navigate to the motor folder. Use the following lines of code to download, configure, and install MFEM.
 
 ```
 cd Dependencies
@@ -280,6 +294,8 @@ cmake .. \
   -DBUILD_TESTING=ON \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
+
+Enter the terminal and navigate to the motor folder. Use the following lines of code to download, configure, and install MISO.
 
 #### Terminal Code
 
