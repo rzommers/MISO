@@ -3,11 +3,13 @@
 This page is for editors of this guide, and serves as a reference of information for adding new content/pages, as well as keeping track of improvements that need to be made.
 
 Remaining issues that need to be resolved:
-- OpenCascade - Current solution is to download a file linked online. Better solution would be to download and install directly from the [OpenCascade Website](https://dev.opencascade.org/release).
-- MotorModel Tests - Section needs to be updated when problems are resolved
-- ESP - It is currently built in such a way that PUMI is not properly visualized, and fails the MFEM tests. A correction needs to be made and subsequent steps must be tested to confirm that the process still works properly.
+
+1. OpenCascade - Current solution is to download a file linked online. Better solution would be to download and install directly from the [OpenCascade Website](https://dev.opencascade.org/release).
+2. MotorModel Tests - Section needs to be updated when problems are resolved
+3. ESP - It is currently built in such a way that PUMI is not properly visualized, and fails the MFEM tests. A correction needs to be made and subsequent steps must be tested to confirm that the process still works properly.
 
 The Readthedocs portion of this repository includes the following files/folders:
+
 - .readthedocs.yaml - Main file; points to configuration files, selects versions of Ubuntu, Python; don't change
 - rtd (folder)
      - mkdocs.yml - Markdown configuration file; used to change project title, theme
