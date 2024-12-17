@@ -10,13 +10,13 @@ Remaining issues that need to be resolved:
 
 The Readthedocs portion of this repository includes the following files/folders:
 
-- .readthedocs.yaml - Main file; points to configuration files, selects versions of Ubuntu, Python; don't change
+1. .readthedocs.yaml - Main file; points to configuration files, selects versions of Ubuntu, Python; don't change
 - rtd (folder)
-     - mkdocs.yml - Markdown configuration file; used to change project title, theme
-     - requirements.txt - Generated requirements file for RTD; don't change
-     - requirements.in - Used for individual builds; don't change
-     - index.md - Main content page; uses Markdown
-     - editors.md - This page
+  2. mkdocs.yml - Markdown configuration file; used to change project title, theme
+  3. requirements.txt - Generated requirements file for RTD; don't change
+  4. requirements.in - Used for individual builds; don't change
+  5. index.md - Main content page; uses Markdown
+  6. editors.md - This page
   
 To make a new page, simply make a new GitHub file with the ending ".md" within.
 
