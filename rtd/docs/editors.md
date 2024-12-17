@@ -1,28 +1,31 @@
 # Editor's Guide
 
-This page is for editors of this guide, and serves as a reference of information for adding 
+This page is for editors of this guide, and serves as a reference of information for adding new content/pages, as well as keeping track of improvements that need to be made.
 
-Immediate things that need to be done:
-1. OpenCascade - Currently have a folder to connect with GitHub, would be nice to find version on their website that is compatible.
+Remaining issues that need to be resolved:
+1. OpenCascade - Current solution is to download a file linked online. Better solution would be to download and install directly from the [OpenCascade Website](https://dev.opencascade.org/release).
 2. MotorModel Tests - Section needs to be updated when problems are resolved
+3. ESP - It is currently built in such a way that PUMI is not properly visualized, and fails the MFEM tests. A correction needs to be made and subsequent steps must be tested to confirm that the process still works properly.
 
 The Readthedocs portion of this repository includes the following files/folders:
-1. .readthedocs.yaml - Main file; same basic formula, doesn't need to be touched beyond what's already been done
+1. .readthedocs.yaml - Main file; points to configuration files, selects versions of Ubuntu, Python; don't change
 2. rtd (folder)
-     1. Makefile
-     2. make.bat
-     3. requirements.txt - installed packages, like markdown; extensions can be added here if desired
-     4. conf.py - Configuration file; used to set project title, author(s), copyright, extensions, and themes; can be modified as project changes
-     5. index.md - Markdown file, main content page
-     6. editors.md - This file
+     1. mkdocs.yml - Markdown configuration file; used to change project title, theme
+     2. requirements.txt - Generated requirements file for RTD; don't change
+     3. requirements.in - Used for individual builds; don't change
+     4. index.md - Main content page; uses Markdown
+     5. editors.md - This page
   
-To make a new page, simply make a new GitHub file with the ending ".md". The readthedocs page should update, but this is not confirmed.
+To make a new page, simply make a new GitHub file with the ending ".md" within.
 
-Editing in GitHub will automatically reflect changes in Readthedocs. There may be a time delay, but no further work needs to be done. Changes to the conf.py file will take longer to reflect over.
+Every GitHub commit automatically makes Readthedocs build a new document. There may be a time delay, but no further work needs to be done.
+
+The other website to maintain is [MotorModel Installation](https://motormodel.readthedocs.io/en/latest/), which does not have an Editor's Guide page.
 
 ### Markdown Basics
 
-- To make titles/subtitles, use the # key before the title name. Each additional # in a row diminishes the size of the title.
+- To make titles/subtitles, use the # key before the title name. Each subsequent # in a row diminishes the size of the title.
 - To make a code block, use ``` before and after the lines of code, each on their own line. Separate code blocks from other text by at least one empty line.
+- To insert a link, write the display text in brackets, and immediately follow it (without spaces) with the embedded link in parentheses.
 - Inspect this file's markdown code to see how bulleted and numbered lists are made.
 - For additional information, check out the [Full Markdown Guide](https://www.markdownguide.org/extended-syntax/)
