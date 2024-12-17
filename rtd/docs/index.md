@@ -37,6 +37,8 @@ cd [folder]      # enter a folder within the current directory
 cd ..            # exit current directory to its container folder
 cd               # navigate to /home/[username]
 cd /             # navigate to /
+rm [file]        # remove a file
+rm -r [folder]   # remove a directory
 ```
 
 The file explorer is best utilized by native Linux users, and doesn't interact as well with WSL. It is most often used to search for specific files, or quickly move or extract files/folders.
@@ -55,6 +57,9 @@ sudo apt install cmake
 sudo apt install git
 sudo apt install build-essential
 sudo apt install openmpi-bin openmpi-doc libopenmpi-dev
+sudo apt install python3
+sudo apt install python3-pip
+sudo apt install python3-mpi4py
 ```
 
 For OpenMPI (or any MPI package) to be used, it must be able to be found on the PC's path. To confirm that OpenMPI has been successfully installed and can be used, enter the terminal and use the following lines of code:
@@ -136,6 +141,7 @@ Enter the terminal and navigate to the motor folder. Use the following lines of 
 cd Installations
 wget -nv https://acdl.mit.edu/esp/otherOCCs/OCC741lin64.tgz
 tar -xzpf OCC741lin64.tgz
+rm OCC741lin64.tgz
 cd ..
 ```
 
@@ -208,7 +214,7 @@ cd build
 # make config_core.sh (see above) or move file into build folder
 source config_core.sh
 make -j 4
-make install
+sudo make install
 cd ../../..
 export PATH=$PATH:/[path_to_motor_folder]/Installations/core
 ```
@@ -223,9 +229,8 @@ A configuration file is highly recommended to be used with cmake to more specifi
 
 ```
 cmake .. \
-  -DCMAKE_C_COMPILER="mpicc" \
   -DCMAKE_CXX_COMPILER="mpicxx" \
-  -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="/[path_to_motor_folder]/Installations/mfem" \
   -DBUILD_SHARED_LIBS=ON \
   -DMFEM_DEBUG=ON \
@@ -275,8 +280,10 @@ To download the ADEPT package, follow the below steps:
 Enter the terminal and navigate to the motor folder. Use the following lines of code to configure and install ADEPT.
 
 ```
-cd Dependencies/adept
+cd Dependencies/adept-2.1
 ./configure --prefix="/[path_to_motor_folder]/Installations/adept"
+    # If an error statement stops this command, use the following line of code then repeat command
+    chmod +x configure
 make
 make install
 cd ../..
@@ -301,9 +308,9 @@ cmake .. \
   -DPUMI_DIR="/[path_to_motor_folder]/Installations/core" \
   -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_TESTING=ON \
-  -DBUILD_PYTHON_WRAPPER=ON \ 
-  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DMISO_USE_CLANG_TIDY=OFF \
+  -DBUILD_PYTHON_WRAPPER=ON
 ```
 
 Enter the terminal and navigate to the motor folder. Use the following lines of code to download, configure, and install MISO.
