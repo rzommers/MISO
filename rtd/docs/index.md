@@ -49,7 +49,7 @@ OpenMPI is a software package that is an implementation of the Message Passing I
 
 In addition to OpenMPI, it is highly recommended to install gcc, which is a collection of compilers, and cmake, which is a build system generator. Alternatives exist for both of these installations, but this guide will use these choices. git and build-essential are mandatory packages, and while build-essential may be installed by default, its presence should be confirmed before proceeding.
 
-To download these packages, you must be on an administrator account. Use the following lines of code in the terminal to download the packages:
+To download these packages, you must be on an administrator account. Note that this list includes three Python packages; these are only required if MISO's Python wrapper needs to be built. Use the following lines of code in the terminal to download the packages:
 
 ```
 sudo apt install gcc
@@ -310,7 +310,7 @@ cmake .. \
   -DBUILD_TESTING=ON \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DMISO_USE_CLANG_TIDY=OFF \
-  -DBUILD_PYTHON_WRAPPER=ON
+  -DBUILD_PYTHON_WRAPPER=ON   # Only required if the Python wrapper needs to be built. If not needed, replace ON with OFF.
 ```
 
 Enter the terminal and navigate to the motor folder. Use the following lines of code to download, configure, and install MISO.
