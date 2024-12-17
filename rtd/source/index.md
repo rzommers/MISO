@@ -316,9 +316,3 @@ cd ../..
 The "make tests" command is expected to take a long time to complete. If any of the 57 tests results in a failure, it is most likely a problem with a dependency. It is also possible that you are running an outdated version of MISO, which may be rectified by navigating to the MISO folder and running the "git submodule update" command
 
 At this point, MISO has been fully installed and may be used for projects.
-
-.. toctree::
-:maxdepth: 2
-:caption: Contents:
-
-   editors
