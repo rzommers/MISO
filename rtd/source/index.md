@@ -2,8 +2,6 @@
 
 This guide explains in a step-by-step approach the recommended way to install the MISO software library.
 
-[editors](editors.md)
-
 ## Windows Subsystem for Linux (WSL)
 
 A Linux OS is highly recommended for this installation. If you are already running on a Linux OS (Ubuntu, Fedora, etc.), skip this step, and continue below with installing OpenMPI and System Packages. If you are running on a Windows OS, one option is to use a Linux simulator; for example, WSL. Note that the code blocks in this guide assume that Ubuntu is being used, so certain steps may be different on other platforms.
@@ -318,3 +316,9 @@ cd ../..
 The "make tests" command is expected to take a long time to complete. If any of the 57 tests results in a failure, it is most likely a problem with a dependency. It is also possible that you are running an outdated version of MISO, which may be rectified by navigating to the MISO folder and running the "git submodule update" command
 
 At this point, MISO has been fully installed and may be used for projects.
+
+.. toctree::
+:maxdepth: 2
+:caption: Contents:
+
+   editors
