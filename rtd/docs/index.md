@@ -64,6 +64,8 @@ which mpicc
 which mpicxx
 ```
 
+These executables are used to compile and link MPI programs.
+
 After each command, a directory should be listed that holds the executable. If these files can not be found, then they need to be added to your path. Enter the file explorer and search for "mpicc". The file, along with mpicxx and others, should be in a "bin" directory. Add this directory as a Path variable by using the following code:
 
 ```
@@ -107,7 +109,7 @@ The official METIS website can be unreliable, so its recommended to use the GitH
 
 To download the METIS package, follow the below steps:
 1. Go to [Metis-MFEM GitHub](https://github.com/mfem/tpls)
-2. Download the default package
+2. Download METIS 5.1.0 (or the tpls wrapper that includes multiple versions)
 3. Unzip the folder and enter it
 4. Unzip the metis-5.1.0 folder and extract it to [path_to_motor_folder]/Dependencies
 
@@ -128,9 +130,14 @@ PUMI is a library that is optional for standalone MFEM, but is required for cert
 
 ### OpenCASCADE
 
-[Specific folder, check for alternatives]
-[Figure out how to attach file to RTD]
-[Alternative: possibility of downloading directly from site?]
+Enter the terminal and navigate to the motor folder. Use the following lines of code to download OpenCascade.
+
+```
+cd Installations
+wget -nv https://acdl.mit.edu/esp/otherOCCs/OCC741lin64.tgz
+tar -xzpf OCC741lin64.tgz
+cd ..
+```
 
 ### ESP
 
@@ -142,7 +149,7 @@ git clone https://github.com/tuckerbabcock/EngSketchPad.git
 cd EngSketchPad
 git checkout 8a5ca2bd6fbed747d371eb926e8a24d0cfcda087
 cd config
-./makeEnv /[path_to_motor_folder]/Installations/OpenCASCADE
+./makeEnv /[path_to_motor_folder]/Installations/OpenCASCADE-7.4.1
 cd ..
 source ESPenv.sh
 cd src
@@ -172,8 +179,8 @@ The below file name and code block are recommended for this configuration file.
 
 ```
 cmake .. \
-  -DCMAKE_C_COMPILER="MPICC" \
-  -DCMAKE_CXX_COMPILER="MPICXX" \
+  -DCMAKE_C_COMPILER="mpicc" \
+  -DCMAKE_CXX_COMPILER="mpicxx" \
   -DCMAKE_INSTALL_PREFIX="/[path_to_motor_folder]/Installations/core" \
   -DBUILD_SHARED_LIBS=ON \
   -DSCOREC_CXX_OPTIMIZE=ON \
@@ -195,6 +202,7 @@ cd Dependencies
 git clone https://github.com/tuckerbabcock/core.git
 cd core
 git checkout egads-dev
+git submodule update --init --recursive
 mkdir build
 cd build
 # make config_core.sh (see above) or move file into build folder
@@ -215,7 +223,8 @@ A configuration file is highly recommended to be used with cmake to more specifi
 
 ```
 cmake .. \
-  -DCMAKE_CXX_COMPILER="MPICXX" \
+  -DCMAKE_C_COMPILER="mpicc" \
+  -DCMAKE_CXX_COMPILER="mpicxx" \
   -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="/[path_to_motor_folder]/Installations/mfem" \
   -DBUILD_SHARED_LIBS=ON \
@@ -267,7 +276,7 @@ Enter the terminal and navigate to the motor folder. Use the following lines of 
 
 ```
 cd Dependencies/adept
-./configure --prefix="/[path_to_motor_folder]/Installations/adept
+./configure --prefix="/[path_to_motor_folder]/Installations/adept"
 make
 make install
 cd ../..
@@ -284,15 +293,17 @@ A configuration file is highly recommended to be used with cmake to more specifi
 
 ```
 cmake .. \
-  -DCMAKE_C_COMPILER="MPICC" \
-  -DCMAKE_CXX_COMPILER="MPICXX" \
+  -DCMAKE_C_COMPILER="mpicc" \
+  -DCMAKE_CXX_COMPILER="mpicxx" \
   -DCMAKE_BUILD_TYPE=Debug \
   -DMFEM_DIR="/[path_to_motor_folder]/Dependencies/mfem" \
   -DAdept_ROOT="/[path_to_motor_folder]/Installations/adept" \
   -DPUMI_DIR="/[path_to_motor_folder]/Installations/core" \
   -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_TESTING=ON \
+  -DBUILD_PYTHON_WRAPPER=ON \ 
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  -DMISO_USE_CLANG_TIDY=OFF \
 ```
 
 Enter the terminal and navigate to the motor folder. Use the following lines of code to download, configure, and install MISO.
