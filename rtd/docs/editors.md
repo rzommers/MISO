@@ -5,8 +5,7 @@ This page is for editors of this guide, and serves as a reference of information
 Remaining issues that need to be resolved:
 
 1. OpenCascade - Current solution is to download a file linked online. Better solution would be to download and install directly from the [OpenCascade Website](https://dev.opencascade.org/release).
-2. MotorModel Tests - Section needs to be updated when problems are resolved
-3. ESP - It is currently built in such a way that PUMI is not properly visualized, and fails the MFEM tests. A correction needs to be made and subsequent steps must be tested to confirm that the process still works properly.
+2. MotorModel Tests - Section needs to be updated when current bugs are resolved
 
 The Readthedocs portion of this repository includes the following files/folders:
 
