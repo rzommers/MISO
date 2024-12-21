@@ -77,7 +77,22 @@ After each command, a directory should be listed that holds the executable. If t
 export PATH=$PATH:[path_to_mpi_container_directory]
 ```
 
-This command MUST be repeated whenever a new command prompt is opened, as an export statement is not permanent. Every export command throughout this process must be repeated when that particular installation needs to be used.
+This command MUST be repeated whenever a new command prompt is opened, as an export statement is not permanent. Every export command throughout this guide must be repeated when the corresponding installation needs to be used.
+
+## Python Environment Setup
+
+A virtual environment must be made to be able to access Python libraries while in the terminal. All Python files must be kept in the same file location as the C++ dependencies.
+
+This step is only required if the tests that use MISO are written in Python.
+
+Enter the terminal and navigate to the motor folder. Use the following lines of code to create and activate a virtual Python environment.
+
+```
+python -m venv source /[path_to_motor_folder]/python
+source /[path_to_motor_folder]/python/bin/activate
+```
+
+The source command must be repeated on each PC reboot, when Python is being used.
 
 ## MFEM Prerequisites
 
@@ -217,6 +232,30 @@ make -j 4
 sudo make install
 cd ../../..
 export PATH=$PATH:/[path_to_motor_folder]/Installations/core
+```
+### Return to ESP
+
+If MISO is eventually going to be used for a modeling project that requires better visualization, then ESP should be re-built before proceeding to allow PUMI to connect with CORE. First, enter the file explorer and open the file: 
+
+```
+/[path_to_motor_folder]/Dependencies/EngSketchPad/ESPenv.sh
+```
+
+Within this file, there should be a line that says "#export PUMI". Replace this line with the following:
+
+```
+export PUMI=/[path_to_motor_folder]/Dependencies/core
+```
+
+Enter the terminal and navigate to the motor folder. Use the following lines of code to rebuild ESP.
+
+```
+cd Dependencies/EngSketchPad
+source ESPenv.sh
+cd src
+make clean
+make
+cd ../../..
 ```
 
 ## Building MFEM
